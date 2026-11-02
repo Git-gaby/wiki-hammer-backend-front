@@ -3,8 +3,7 @@
 const jwt = require('jwt-simple');
 const moment = require('moment');
 
-
-const CLAVE_SECRETA = 'clave_secreta_warhammer_2026';
+const CLAVE_SECRETA = process.env.JWT_SECRET || 'clave_por_defecto_segura';
 
 const jwtHelper = {
     crearToken: (usuario) => {

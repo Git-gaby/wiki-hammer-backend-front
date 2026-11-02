@@ -12,13 +12,13 @@
   - Tabla `miniaturas` con columnas: `id`, `nombre`, `grupo`, `faccion`, `edicion`, `peana`, `imagen` y marcas de tiempo (`created_at`).
 - **Condición de victoria:** Ejecutar el archivo en phpMyAdmin sin errores de sintaxis y con un usuario admin insertado de prueba.
 
-### - [ ] Misión 2: El Búnker del Tecnosacerdote (Variables de Entorno)
+### - [X] Misión 2: El Búnker del Tecnosacerdote (Variables de Entorno)
 
 - **Encargado sugerido:** Backend (Gabriel).
 - **Objetivo:** Desterrar contraseñas quemadas y claves secretas del código fuente instalando `dotenv`.
 - **Condición de victoria:** Crear el archivo `.env` (ignorado en Git) y un `.env.example` en el repositorio. `CLAVE_SECRETA` y las credenciales de MariaDB deben leerse exclusivamente desde `process.env`.
 
-### - [ ] Misión 3: El Sello Inquisitorial (Roles y Permisos)
+### - [X] Misión 3: El Sello Inquisitorial (Roles y Permisos)
 
 - **Encargado sugerido:** Backend (Gabriel).
 - **Objetivo:** Crear el middleware `esAdmin.js` que verifique si `req.usuario.rol === 'admin'`. Proteger la ruta `DELETE /api/miniaturas/:id` para que solo admins puedan purgar registros.
@@ -30,7 +30,7 @@
 
 > Misiones para dejar el motor de datos 100% operativo.
 
-### - [ ] Misión 4: El Taller de Modificaciones (Endpoint PUT)
+### - [X] Misión 4: El Taller de Modificaciones (Endpoint PUT)
 
 - **Encargado sugerido:** Backend / Colaborativo.
 - **Objetivo:** Implementar la actualización de miniaturas (`PUT /api/miniaturas/:id`) para corregir nombres, peanas o facciones sin tener que eliminarlas.
