@@ -30,7 +30,7 @@
 
 > Misiones para dejar el motor de datos 100% operativo.
 
-### - [ ] Misión 4: El Taller de Modificaciones (Endpoint PUT)
+### - [X] Misión 4: El Taller de Modificaciones (Endpoint PUT)
 
 - **Encargado sugerido:** Backend / Colaborativo.
 - **Objetivo:** Implementar la actualización de miniaturas (`PUT /api/miniaturas/:id`) para corregir nombres, peanas o facciones sin tener que eliminarlas.

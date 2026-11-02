@@ -105,6 +105,51 @@ const controladorMiniatura = {
                 mensaje: 'Error interno del servidor'
             });
         }
+    },
+
+    // 5. Actualizar miniatura existente
+    actualizar: async (req, res) => {
+        try {
+            const { id } = req.params;
+            const { nombre, grupo, faccion, edicion, peana, imagen } = req.body;
+
+            // 1. Validar que la miniatura a editar exista
+            const [existe] = await db.query('SELECT id FROM miniaturas WHERE id = ?', [id]);
+            if (existe.length === 0) {
+                return res.status(404).json({
+                    status: 'error',
+                    mensaje: `Miniatura con ID ${id} no encontrada`
+                });
+            }
+
+            // 2. Validar que vengan los campos obligatorios
+            if (!nombre || !grupo || !faccion || !edicion || !peana) {
+                return res.status(400).json({
+                    status: 'error',
+                    mensaje: 'Faltan campos obligatorios para actualizar (nombre, grupo, faccion, edicion, peana)'
+                });
+            }
+
+            // 3. Ejecutar UPDATE parametrizado
+            const sql = `
+                UPDATE miniaturas 
+                SET nombre = ?, grupo = ?, faccion = ?, edicion = ?, peana = ?, imagen = ?
+                WHERE id = ?
+            `;
+            await db.query(sql, [nombre, grupo, faccion, edicion, peana, imagen || 'default.jpg', id]);
+
+            return res.status(200).json({
+                status: 'success',
+                mensaje: `Miniatura con ID ${id} actualizada correctamente`
+            });
+
+        } catch (error) {
+            console.error('Error al actualizar miniatura:', error);
+            return res.status(500).json({
+                status: 'error',
+                mensaje: 'Error interno al actualizar la miniatura'
+            });
+        }
     }
 };
 
