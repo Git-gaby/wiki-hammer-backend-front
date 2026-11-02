@@ -12,7 +12,7 @@
   - Tabla `miniaturas` con columnas: `id`, `nombre`, `grupo`, `faccion`, `edicion`, `peana`, `imagen` y marcas de tiempo (`created_at`).
 - **Condición de victoria:** Ejecutar el archivo en phpMyAdmin sin errores de sintaxis y con un usuario admin insertado de prueba.
 
-### - [ ] Misión 2: El Búnker del Tecnosacerdote (Variables de Entorno)
+### - [X] Misión 2: El Búnker del Tecnosacerdote (Variables de Entorno)
 
 - **Encargado sugerido:** Backend (Gabriel).
 - **Objetivo:** Desterrar contraseñas quemadas y claves secretas del código fuente instalando `dotenv`.

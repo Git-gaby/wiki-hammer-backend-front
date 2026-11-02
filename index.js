@@ -1,5 +1,7 @@
 'use strict';
 
+require('dotenv').config();
+
 const application = require('./applications');
 const db = require('./models/db');
 
