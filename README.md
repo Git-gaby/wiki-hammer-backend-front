@@ -18,7 +18,7 @@
 - **Objetivo:** Desterrar contraseñas quemadas y claves secretas del código fuente instalando `dotenv`.
 - **Condición de victoria:** Crear el archivo `.env` (ignorado en Git) y un `.env.example` en el repositorio. `CLAVE_SECRETA` y las credenciales de MariaDB deben leerse exclusivamente desde `process.env`.
 
-### - [ ] Misión 3: El Sello Inquisitorial (Roles y Permisos)
+### - [X] Misión 3: El Sello Inquisitorial (Roles y Permisos)
 
 - **Encargado sugerido:** Backend (Gabriel).
 - **Objetivo:** Crear el middleware `esAdmin.js` que verifique si `req.usuario.rol === 'admin'`. Proteger la ruta `DELETE /api/miniaturas/:id` para que solo admins puedan purgar registros.

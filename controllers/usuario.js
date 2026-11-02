@@ -28,9 +28,8 @@ const usuarioController = {
             const passwordHash = await bcrypt.hash(password, 10);
 
             
-            const sql = 'INSERT INTO usuarios (nombre, email, password) VALUES (?, ?, ?)';
+            const sql = 'INSERT INTO usuarios (nombre, email, password, rol) VALUES (?, ?, ?, "usuario")';
             const [resultado] = await db.query(sql, [nombre, email, passwordHash]);
-
             return res.status(201).json({
                 status: 'success',
                 mensaje: 'Usuario registrado correctamente',
