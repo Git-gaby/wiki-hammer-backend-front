@@ -5,13 +5,15 @@ import { authGuard } from './guards/auth-guard';
 import { loginGuard } from './guards/login-guard';
 
 export const routes: Routes = [
-  // Ruta por defecto: si entra vacío, redirige a /home
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  // Ruta por defecto: si entra a la raíz, mandar a login (o home si el guard lo evalúa)
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
 
-  // Vistas de la aplicación
-  { path: 'home', component: Home },
-  { path: 'login', component: Login },
+  // Home blindado: solo entra con token
+  { path: 'home', component: Home, canActivate: [authGuard] },
 
-  // Comodín para URLs no encontradas
-  { path: '**', redirectTo: 'home' }
+  // Login blindado al revés: si ya está logueado, loginGuard lo manda a home
+  { path: 'login', component: Login, canActivate: [loginGuard] },
+
+  // Comodín para URLs no encontradas: mandar a login
+  { path: '**', redirectTo: 'login' }
 ];
