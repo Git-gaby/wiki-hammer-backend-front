@@ -60,7 +60,7 @@
 - **Objetivo:** Inicializar la aplicación web (Angular u otra alternativa moderna), configurar el enrutamiento y crear los formularios de Registro e Inicio de Sesión. Guardar el token devuelto en `localStorage`.
 - **Condición de victoria:** Iniciar sesión desde el navegador, almacenar el token y redirigir automáticamente a la vista de la galería.
 
-### - [ ] Misión 8: El Gran Códex Visual (Galería de Miniaturas)
+### - [X] Misión 8: El Gran Códex Visual (Galería de Miniaturas)
 
 - **Encargado sugerido:** Frontend (Gabriel).
 - **Objetivo:** Diseñar la vista principal con tarjetas visuales (*cards*) para cada miniatura (mostrando imagen, nombre, facción y tamaño de peana) y una barra de búsqueda con filtros por facción.
