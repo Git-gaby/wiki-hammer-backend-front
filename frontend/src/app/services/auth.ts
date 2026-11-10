@@ -7,32 +7,37 @@ import { Observable, tap } from 'rxjs';
 })
 export class AuthService {
   private http = inject(HttpClient);
-  // Puerto de tu backend en Express (cámbialo si tu servidor corre en otro puerto)
-  private API_URL = 'http://localhost:2508/api';
+  // Puerto 2508 y prefijo /api
+  private apiUrl = 'http://localhost:2508/api';
 
-  // Enviar credenciales al backend y almacenar el token devuelto
-  login(credenciales: { email: string; password: string }): Observable<any> {
-    return this.http.post<any>(`${this.API_URL}/login`, credenciales).pipe(
+  login(credenciales: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/login`, credenciales).pipe(
       tap((res) => {
-        if (res && res.token) {
-          localStorage.setItem('token', res.token);
+        // Tu backend suele devolver { token: "..." } o { token: res.token }
+        const token = res.token || res.jwt;
+        if (token) {
+          localStorage.setItem('token', token);
         }
       })
     );
   }
 
-  // Obtener el JWT almacenado en el navegador
+  // Corregido: apunta a /registro, que es como se llama en tu router
+  register(datosUsuario: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/registro`, datosUsuario);
+  }
+
+    // Obtener el JWT almacenado en el navegador
   getToken(): string | null {
     return localStorage.getItem('token');
   }
 
-  // Verificar si hay sesión activa para los guards
-  isLoggedIn(): boolean {
-    return !!this.getToken();
-  }
 
-  // Limpiar sesión al desconectarse
   logout(): void {
     localStorage.removeItem('token');
+  }
+
+  isLoggedIn(): boolean {
+    return !!localStorage.getItem('token');
   }
 }

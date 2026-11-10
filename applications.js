@@ -19,3 +19,8 @@ application.use(routerMiniaturas);
 application.use(routerUsuarios);
 
 module.exports = application;
+
+
+
+
+

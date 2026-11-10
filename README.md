@@ -54,7 +54,7 @@
 
 > Misiones de interfaz de usuario para que la wiki cobre vida.
 
-### - [ ] Misión 7: La Puerta de Entrada (Estructura Base y Autenticación)
+### - [X] Misión 7: La Puerta de Entrada (Estructura Base y Autenticación)
 
 - **Encargado sugerido:** Frontend (Gabriel).
 - **Objetivo:** Inicializar la aplicación web (Angular u otra alternativa moderna), configurar el enrutamiento y crear los formularios de Registro e Inicio de Sesión. Guardar el token devuelto en `localStorage`.
