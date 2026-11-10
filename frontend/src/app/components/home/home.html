@@ -1,14 +1,20 @@
 <div class="codex-container">
-  <!-- Barra superior Imperial -->
   <header class="codex-header">
     <div class="header-titles">
       <h1>Gran Códex Visual</h1>
       <p class="subtitle">Registro de Miniaturas del Adeptus Terra</p>
     </div>
-    <button class="btn-logout" (click)="logout()">Abandonar Archivo</button>
+    
+    <div class="header-actions">
+      <!-- Botón exclusivo para Administradores -->
+      <button *ngIf="esAdmin" class="btn-forja" (click)="abrirCrear()">
+        + Forjar Reliquia
+      </button>
+      <button class="btn-logout" (click)="logout()">Abandonar Archivo</button>
+    </div>
   </header>
 
-  <!-- Panel de Búsqueda y Filtros -->
+  <!-- Filtros -->
   <section class="filters-bar">
     <div class="search-box">
       <input 
@@ -29,20 +35,10 @@
     </div>
   </section>
 
-  <!-- Estados de carga o error -->
-  <div *ngIf="cargando" class="status-msg">
-    Consultando los archivos del Administratum...
-  </div>
-
-  <div *ngIf="errorCarga" class="status-msg error">
-    {{ errorCarga }}
-  </div>
-
-  <!-- Cuadrícula de Tarjetas (Cards) -->
+  <!-- Cards Grid -->
   <main class="cards-grid" *ngIf="!cargando && !errorCarga">
     <article class="mini-card" *ngFor="let item of miniaturasFiltradas">
       <div class="card-img-wrapper">
-        <!-- Si no tiene imagen o es default, mostramos un placeholder imperial -->
         <img 
           [src]="item.imagen && item.imagen !== 'default.jpg' ? 'http://localhost:2508/miniaturas/' + item.imagen : 'assets/placeholder-mini.png'" 
           [alt]="item.nombre"
@@ -59,11 +55,69 @@
           <small><strong>Grupo:</strong> {{ item.grupo }}</small>
           <small><strong>Edición:</strong> {{ item.edicion }}</small>
         </div>
+
+        <!-- Acciones exclusivas de Administrador -->
+        <div class="admin-card-actions" *ngIf="esAdmin">
+          <button class="btn-edit" (click)="abrirEditar(item)">Editar</button>
+          <button class="btn-delete" (click)="eliminarMiniatura(item)">Purgar</button>
+        </div>
       </div>
     </article>
-
-    <div *ngIf="miniaturasFiltradas.length === 0" class="no-results">
-      No se encontraron registros que coincidan con la búsqueda.
-    </div>
   </main>
+
+  <!-- Modal La Forja de Reliquias (Crear / Editar) -->
+  <div class="modal-backdrop" *ngIf="mostrarModalForja">
+    <div class="modal-forja">
+      <h2>{{ modoEdicion ? 'Modificar Registro' : 'Forjar Nueva Reliquia' }}</h2>
+
+      <div *ngIf="mensajeForja" class="modal-error">{{ mensajeForja }}</div>
+
+      <form (ngSubmit)="guardarMiniatura()">
+        <div class="form-group">
+          <label>Nombre de la Miniatura:</label>
+          <input type="text" [(ngModel)]="miniaturaForm.nombre" name="nombre" required />
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Facción:</label>
+            <input type="text" [(ngModel)]="miniaturaForm.faccion" name="faccion" placeholder="Ej. Space Marines" required />
+          </div>
+
+          <div class="form-group">
+            <label>Grupo:</label>
+            <select [(ngModel)]="miniaturaForm.grupo" name="grupo">
+              <option value="Imperium">Imperium</option>
+              <option value="Chaos">Chaos</option>
+              <option value="Xenos">Xenos</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Peana:</label>
+            <input type="text" [(ngModel)]="miniaturaForm.peana" name="peana" placeholder="Ej. 32mm, 40mm" required />
+          </div>
+
+          <div class="form-group">
+            <label>Edición:</label>
+            <input type="text" [(ngModel)]="miniaturaForm.edicion" name="edicion" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Nombre de archivo de imagen (en public/miniaturas):</label>
+          <input type="text" [(ngModel)]="miniaturaForm.imagen" name="imagen" placeholder="ejemplo__miniatura.jpg" />
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn-cancel" (click)="cerrarModal()">Cancelar</button>
+          <button type="submit" class="btn-save">
+            {{ modoEdicion ? 'Actualizar' : 'Consagrar Registro' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>

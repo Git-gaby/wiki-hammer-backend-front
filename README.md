@@ -66,7 +66,7 @@
 - **Objetivo:** Diseñar la vista principal con tarjetas visuales (*cards*) para cada miniatura (mostrando imagen, nombre, facción y tamaño de peana) y una barra de búsqueda con filtros por facción.
 - **Condición de victoria:** La página consume `GET /api/miniaturas` y renderiza las miniaturas dinámicamente.
 
-### - [ ] Misión 9: La Forja de Reliquias (Panel de Administración)
+### - [X] Misión 9: La Forja de Reliquias (Panel de Administración)
 
 - **Encargado sugerido:** Frontend (Gabriel).
 - **Objetivo:** Crear la interfaz para agregar nuevas miniaturas (`POST`) y editarlas (`PUT`). Si el usuario logueado es admin, mostrar además el botón de eliminar miniatura con confirmación.

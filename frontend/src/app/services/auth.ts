@@ -7,34 +7,55 @@ import { Observable, tap } from 'rxjs';
 })
 export class AuthService {
   private http = inject(HttpClient);
-  // Puerto 2508 y prefijo /api
   private apiUrl = 'http://localhost:2508/api';
 
   login(credenciales: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/login`, credenciales).pipe(
       tap((res) => {
-        // Tu backend suele devolver { token: "..." } o { token: res.token }
         const token = res.token || res.jwt;
         if (token) {
           localStorage.setItem('token', token);
+        }
+
+        // Si el backend devuelve el objeto usuario con su rol:
+        const usuario = res.usuario || res.data || res.user;
+        if (usuario) {
+          localStorage.setItem('usuario', JSON.stringify(usuario));
+        } else if (token) {
+          // Si el rol viene empaquetado dentro del payload del token JWT
+          try {
+            const payload = JSON.parse(atob(token.split('.')[1]));
+            localStorage.setItem('usuario', JSON.stringify(payload));
+          } catch (e) {
+            console.error('No se pudo decodificar el payload del token', e);
+          }
         }
       })
     );
   }
 
-  // Corregido: apunta a /registro, que es como se llama en tu router
   register(datosUsuario: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/registro`, datosUsuario);
   }
 
-    // Obtener el JWT almacenado en el navegador
   getToken(): string | null {
     return localStorage.getItem('token');
   }
 
+  getUsuario(): any {
+    const usuarioRaw = localStorage.getItem('usuario');
+    return usuarioRaw ? JSON.parse(usuarioRaw) : null;
+  }
+
+  // Método clave para la Misión 9: determina si se muestran botones de admin
+  esAdmin(): boolean {
+    const usuario = this.getUsuario();
+    return usuario?.rol === 'admin';
+  }
 
   logout(): void {
     localStorage.removeItem('token');
+    localStorage.removeItem('usuario');
   }
 
   isLoggedIn(): boolean {
