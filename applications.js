@@ -22,5 +22,11 @@ application.use(
 // Rutas de la API
 application.use(routerMiniaturas);
 application.use(routerUsuarios);
-
+// En applications.js:
+application.use('/miniaturas', express.static(path.join(__dirname, 'public', 'miniaturas')));
 module.exports = application;
+
+
+
+
+

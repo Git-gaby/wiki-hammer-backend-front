@@ -1,0 +1,71 @@
+<div class="login-container">
+  <div class="blur-frame">
+    <div class="login-card">
+      <h2>{{ isRegisterMode ? 'Reclutamiento' : 'Iniciar Sesión' }}</h2>
+
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <!-- Campo Nombre (Alineado con req.body.nombre) -->
+        <div class="form-group" *ngIf="isRegisterMode">
+          <label for="nombre">Nombre de Identificación</label>
+          <input 
+            id="nombre" 
+            type="text" 
+            formControlName="nombre" 
+            placeholder="Ej: Custode_Ra"
+          />
+          <div *ngIf="loginForm.get('nombre')?.touched && loginForm.get('nombre')?.invalid" class="error-text">
+            <small *ngIf="loginForm.get('nombre')?.errors?.['required']">El nombre es obligatorio.</small>
+            <small *ngIf="loginForm.get('nombre')?.errors?.['minlength']">Mínimo 3 caracteres.</small>
+          </div>
+        </div>
+
+        <!-- Campo Correo -->
+        <div class="form-group">
+          <label for="email">Identificador / Correo</label>
+          <input 
+            id="email" 
+            type="email" 
+            formControlName="email" 
+            placeholder="usuario@imperium.com"
+          />
+          <div *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid" class="error-text">
+            <small *ngIf="loginForm.get('email')?.errors?.['required']">El correo es obligatorio.</small>
+            <small *ngIf="loginForm.get('email')?.errors?.['email']">Ingresa un correo válido.</small>
+          </div>
+        </div>
+
+        <!-- Campo Contraseña -->
+        <div class="form-group">
+          <label for="password">Clave de Acceso</label>
+          <input 
+            id="password" 
+            type="password" 
+            formControlName="password" 
+            placeholder="••••••••"
+          />
+          <div *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid" class="error-text">
+            <small *ngIf="loginForm.get('password')?.errors?.['required']">La clave es obligatoria.</small>
+            <small *ngIf="loginForm.get('password')?.errors?.['minlength']">Mínimo 4 caracteres.</small>
+          </div>
+        </div>
+
+        <div *ngIf="errorMessage" class="alert-error">
+          {{ errorMessage }}
+        </div>
+        <div *ngIf="successMessage" class="alert-success">
+          {{ successMessage }}
+        </div>
+
+        <button type="submit" [disabled]="loginForm.invalid">
+          {{ isRegisterMode ? 'Registrar en el Archivo' : 'Entrar al Archivo' }}
+        </button>
+
+        <div class="toggle-container">
+          <button type="button" class="btn-toggle" (click)="toggleMode()">
+            {{ isRegisterMode ? '¿Ya tienes credenciales? Inicia sesión' : '¿No estás registrado? Reclútate aquí' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

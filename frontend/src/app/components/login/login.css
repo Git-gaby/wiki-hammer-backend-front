@@ -1,0 +1,242 @@
+/* =========================================================
+   1. CONTENEDOR PRINCIPAL FLUIDO
+   ========================================================= */
+
+.login-container {
+  display: flex;
+  justify-content: center; /* O usa flex-end si prefieres anclarlo a la derecha */
+  align-items: center;
+  min-height: 100vh;
+  min-height: 100dvh; /* Soporte para barras de navegación dinámicas en móviles */
+  width: 100%;
+  margin: 0;
+  padding: 1rem;
+  box-sizing: border-box;
+
+  background-color: #050608;
+  background-image: url("/Emperador_Gran_Cruzada_Astartes_Warhammer_40k.jpg");
+  background-repeat: no-repeat;
+  background-position: right 2.5px center;
+
+  background-size: cover;
+}
+
+/* =========================================================
+   2. MARCO DIFUMINADO EXTERIOR (Adaptable)
+   ========================================================= */
+
+
+.blur-frame {
+  width: 100%;
+  max-width: 400px; /* Límite para que no se ensanche de más en PC */
+  padding: clamp(8px, 2vw, 14px); /* Espaciado que se adapta a la pantalla */ 
+  border-radius: 6px;
+  background: rgba(10, 12, 16, 0.45); /* Capa translúcida */
+  backdrop-filter: blur(14px); /* Desenfoca la imagen detrás */
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(212, 175, 55, 0.25); /* Resplandor dorado tenue */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.85);
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   3. TARJETA INTERIOR
+   ========================================================= */
+
+
+.login-card {
+  width: 100%;
+  background: rgba(15, 17, 23, 0.88); /* Fondo más denso para lectura cómoda */
+  border: 1px solid rgba(212, 175, 55, 0.45);
+  border-top: 2px solid #d4af37; /* Detalle de oro imperial en el marco superior */
+  border-radius: 4px;
+  padding: clamp(1.2rem, 4vw, 2rem) clamp(1rem, 3.5vw, 1.8rem);  
+  box-sizing: border-box;
+  color: #e2e8f0;
+}
+
+/* Título con Oro Divino, gradiente metálico y sombra gótica */
+.login-card h2 {
+  font-family: 'Cinzel Decorative', serif;
+  font-weight: 700;
+  font-size: clamp(1.1rem, 3.2vw, 1.45rem);
+  letter-spacing: clamp(1px, 0.3vw, 2px);
+  text-transform: uppercase;
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: clamp(1rem, 2.5vw, 1.8rem);
+  padding-bottom: 0.6rem;
+
+  /* Efecto de oro fundido / Auramita sobre el texto */
+  background: linear-gradient(180deg, #fff3b0 0%, #d4af37 40%, #aa7c11 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  
+  /* Resplandor y profundidad */
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.9)) drop-shadow(0 0 10px rgba(212, 175, 55, 0.35));
+  border-bottom: 1px solid rgba(212, 175, 55, 0.4);
+}
+
+/* Inputs y estructura de formulario */
+.form-group {
+  margin-bottom: 1.1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Etiquetas solemnes */
+.form-group label {
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  font-size: clamp(0.75rem, 2vw, 0.85rem);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #dfd7bf;
+  margin-bottom: 0.35rem;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+/* Inputs estilizados como terminal imperial */
+.form-group input {
+  width: 100%;
+  box-sizing: border-box;
+  font-family: 'Cinzel', serif;
+  letter-spacing: 0.5px;
+  padding: clamp(0.6rem, 1.8vw, 0.75rem) 0.8rem;
+  background: rgba(4, 5, 8, 0.82);
+  border: 1px solid #453c28;
+  border-radius: 2px;
+  color: #f5eedc;
+  font-size: clamp(0.85rem, 2vw, 0.95rem);
+  transition: all 0.25s ease;
+}
+
+.form-group input::placeholder {
+  color: #645a46;
+  font-family: 'Cinzel', serif;
+  letter-spacing: 0.5px;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #d4af37;
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.4), inset 0 0 6px rgba(212, 175, 55, 0.15);
+  background: rgba(8, 10, 14, 0.92);
+}
+
+/* Textos de validación */
+.error-text small {
+  font-family: 'Cinzel', serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.5px;
+  color: #f87171;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
+}
+
+.alert-error {
+  background-color: rgba(153, 27, 27, 0.35);
+  border: 1px solid #ef4444;
+  color: #fca5a5;
+  padding: 0.5rem;
+  border-radius: 3px;
+  margin-bottom: 1rem;
+  font-size: 0.78rem;
+  text-align: center;
+  font-family: 'Cinzel', serif;
+}
+
+/* =========================================================
+   5. BOTÓN IMPERIAL
+   ========================================================= */
+
+
+button[type="submit"] {
+  width: 100%;
+  font-family: 'Cinzel Decorative', serif;
+  font-weight: 700;
+  font-size: clamp(0.82rem, 2vw, 0.95rem);
+  letter-spacing: clamp(1px, 0.2vw, 2px);
+  text-transform: uppercase;
+  padding: clamp(0.7rem, 2vw, 0.85rem);
+  margin-top: 0.5rem;
+  cursor: pointer;
+
+  /* Lingote de oro pulido */
+  background: linear-gradient(180deg, #fae084 0%, #d4af37 45%, #946d13 100%);
+  color: #0d0e12;
+  border: 1px solid #ffe89e;
+  border-radius: 2px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.8), 0 0 10px rgba(212, 175, 55, 0.3);
+  transition: all 0.25s ease;
+}
+
+button[type="submit"]:hover:not(:disabled) {
+  background: linear-gradient(180deg, #fff1b8 0%, #e5c158 45%, #b3851b 100%);
+  box-shadow: 0 0 20px rgba(245, 214, 102, 0.7), 0 0 8px rgba(212, 175, 55, 0.9);
+  transform: translateY(-1px);
+}
+
+button[type="submit"]:disabled {
+  background: #1e2229;
+  border-color: #2e3540;
+  color: #4b5563;
+  box-shadow: none;
+  transform: none;
+  cursor: not-allowed;
+}
+
+
+/* =========================================================
+   6. BREAKPOINTS ESPECÍFICOS (Móviles pequeños)
+   ========================================================= */
+@media (max-width: 480px) {
+  .login-container {
+    padding: 0.75rem;
+    background-position: 30% center; /* Enfoca el centro de la escena en pantallas angostas */
+  }
+
+  .blur-frame {
+    padding: 6px;
+    border-radius: 4px;
+  }
+
+  .login-card {
+    padding: 1.25rem 1rem;
+  }
+}
+
+
+/* Botón de alternar modo */
+.toggle-container {
+  margin-top: 1.2rem;
+  text-align: center;
+}
+
+.btn-toggle {
+  background: none;
+  border: none;
+  color: #dfd7bf;
+  font-family: 'Cinzel', serif;
+  font-size: 0.8rem;
+  letter-spacing: 0.8px;
+  cursor: pointer;
+  text-decoration: underline;
+  transition: color 0.2s ease;
+}
+
+.btn-toggle:hover {
+  color: #facc15;
+}
+
+/* Alerta de éxito imperial */
+.alert-success {
+  background-color: rgba(22, 101, 52, 0.4);
+  border: 1px solid #22c55e;
+  color: #86efac;
+  padding: 0.5rem;
+  border-radius: 3px;
+  margin-bottom: 1rem;
+  font-size: 0.78rem;
+  text-align: center;
+  font-family: 'Cinzel', serif;
+}

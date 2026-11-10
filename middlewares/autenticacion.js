@@ -16,7 +16,7 @@ const autenticar = (req, res, next) => {
     }
 
     
-    const token = cabeceraAuth.replace(/['"]+/g, '');
+    const token = cabeceraAuth.replace(/['"]+/g, '').replace(/^Bearer\s+/i, '');
 
     try {
         
@@ -37,7 +37,7 @@ const autenticar = (req, res, next) => {
         next();
 
     } catch (error) {
-        return res.status(404).json({
+        return res.status(401).json({
             status: 'error',
             mensaje: 'Token inválido'
         });
