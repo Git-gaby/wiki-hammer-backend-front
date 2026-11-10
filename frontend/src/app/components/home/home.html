@@ -1,1 +1,69 @@
-<p>home works!</p>
+<div class="codex-container">
+  <!-- Barra superior Imperial -->
+  <header class="codex-header">
+    <div class="header-titles">
+      <h1>Gran Códex Visual</h1>
+      <p class="subtitle">Registro de Miniaturas del Adeptus Terra</p>
+    </div>
+    <button class="btn-logout" (click)="logout()">Abandonar Archivo</button>
+  </header>
+
+  <!-- Panel de Búsqueda y Filtros -->
+  <section class="filters-bar">
+    <div class="search-box">
+      <input 
+        type="text" 
+        [(ngModel)]="searchTerm" 
+        placeholder="Buscar por nombre o palabra clave..."
+      />
+    </div>
+
+    <div class="filter-select">
+      <label for="faccion">Facción:</label>
+      <select id="faccion" [(ngModel)]="selectedFaccion">
+        <option value="todas">-- Todas las Facciones --</option>
+        <option *ngFor="let fac of faccionesDisponibles" [value]="fac">
+          {{ fac }}
+        </option>
+      </select>
+    </div>
+  </section>
+
+  <!-- Estados de carga o error -->
+  <div *ngIf="cargando" class="status-msg">
+    Consultando los archivos del Administratum...
+  </div>
+
+  <div *ngIf="errorCarga" class="status-msg error">
+    {{ errorCarga }}
+  </div>
+
+  <!-- Cuadrícula de Tarjetas (Cards) -->
+  <main class="cards-grid" *ngIf="!cargando && !errorCarga">
+    <article class="mini-card" *ngFor="let item of miniaturasFiltradas">
+      <div class="card-img-wrapper">
+        <!-- Si no tiene imagen o es default, mostramos un placeholder imperial -->
+        <img 
+          [src]="item.imagen && item.imagen !== 'default.jpg' ? item.imagen : 'assets/placeholder-mini.png'" 
+          [alt]="item.nombre"
+          loading="lazy"
+        />
+        <span class="badge-peana">{{ item.peana }}</span>
+      </div>
+
+      <div class="card-body">
+        <span class="card-faction">{{ item.faccion }}</span>
+        <h3 class="card-title">{{ item.nombre }}</h3>
+
+        <div class="card-meta">
+          <small><strong>Grupo:</strong> {{ item.grupo }}</small>
+          <small><strong>Edición:</strong> {{ item.edicion }}</small>
+        </div>
+      </div>
+    </article>
+
+    <div *ngIf="miniaturasFiltradas.length === 0" class="no-results">
+      No se encontraron registros que coincidan con la búsqueda.
+    </div>
+  </main>
+</div>
