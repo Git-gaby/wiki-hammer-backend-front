@@ -56,7 +56,9 @@ const usuarioController = {
                 });
             }
 
-            const [usuarios] = await db.query('SELECT * FROM usuarios WHERE email = ?', [email]);
+            const sql = 'SELECT * FROM usuarios WHERE email = ? OR nombre = ?';
+            const [usuarios] = await db.query(sql, [email, email]);           
+           
             if (usuarios.length === 0) {
                 return res.status(401).json({
                     status: 'error',
