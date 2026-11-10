@@ -36,7 +36,7 @@
 - **Objetivo:** Implementar la actualización de miniaturas (`PUT /api/miniaturas/:id`) para corregir nombres, peanas o facciones sin tener que eliminarlas.
 - **Condición de victoria:** Modificar un registro existente desde Postman y verificar que MariaDB actualice los campos correctos.
 
-### - [ ] Misión 5: Los Sensores del Augur (Filtros de Búsqueda y Paginación)
+### - [X] Misión 5: Los Sensores del Augur (Filtros de Búsqueda y Paginación)
 
 - **Encargado sugerido:** Backend / Colaborativo.
 - **Objetivo:** Permitir que `GET /api/miniaturas` reciba parámetros de consulta (`?faccion=Imperio&edicion=10ma`) para filtrar resultados dinámicamente.
