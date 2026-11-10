@@ -168,7 +168,7 @@ JWT_SECRET=clave_secreta_warhammer_2026
 npm install
 
 # Iniciar el servidor (escuchando por defecto en el puerto 2508)
-node applications.js
+node index.js
 ```
 
 ### 6. Instalar y Levantar el Cliente Frontend (Angular)
