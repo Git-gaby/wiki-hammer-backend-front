@@ -3,23 +3,118 @@
 const db = require('../models/db');
 
 const controladorMiniatura = {
-    // 1. Obtener todas
+    
+    // 1. Obtener miniaturas con filtros y paginación
     obtenerTodas: async (req, res) => {
         try {
-            const [filas] = await db.query('SELECT * FROM miniaturas');
+            const filtros = req.query || {};
+
+            // Validar los números de página y límite
+            const leerEntero = (valor, predeterminado, maximo) => {
+                if (valor === undefined) return predeterminado;
+
+                if (typeof valor !== 'string' || !/^[1-9]\d*$/.test(valor)) {
+                    return null;
+                }
+
+                const numero = Number(valor);
+
+                return Number.isSafeInteger(numero) && numero <= maximo
+                    ? numero
+                    : null;
+            };
+
+            const pagina = leerEntero(filtros.pagina, 1, 1000000);
+            const limite = leerEntero(filtros.limite, 20, 100);
+
+            if (pagina === null || limite === null) {
+                return res.status(400).json({
+                    status: 'error',
+                    mensaje: 'pagina debe ser un entero entre 1 y 1000000; limite, entre 1 y 100'
+                });
+            }
+
+            const condiciones = [];
+            const parametros = [];
+
+            // Filtros por facción, edición y grupo
+            for (const columna of ['faccion', 'edicion', 'grupo']) {
+                const valor = filtros[columna];
+
+                if (valor === undefined) continue;
+
+                if (typeof valor !== 'string') {
+                    return res.status(400).json({
+                        status: 'error',
+                        mensaje: `El filtro ${columna} debe ser texto`
+                    });
+                }
+
+                const limpio = valor.trim();
+
+                if (limpio) {
+                    condiciones.push(`${columna} = ?`);
+                    parametros.push(limpio);
+                }
+            }
+
+            // Búsqueda parcial por nombre
+            if (filtros.nombre !== undefined) {
+                if (typeof filtros.nombre !== 'string') {
+                    return res.status(400).json({
+                        status: 'error',
+                        mensaje: 'El filtro nombre debe ser texto'
+                    });
+                }
+
+                const nombre = filtros.nombre.trim();
+
+                if (nombre) {
+                    condiciones.push('nombre LIKE ?');
+                    parametros.push(`%${nombre}%`);
+                }
+            }
+
+            // Construir las condiciones SQL
+            const donde = condiciones.length
+                ? ` WHERE ${condiciones.join(' AND ')}`
+                : '';
+
+            const desplazamiento = (pagina - 1) * limite;
+
+            // Contar los resultados que cumplen los filtros
+            const [conteo] = await db.query(
+                `SELECT COUNT(*) AS total FROM miniaturas${donde}`,
+                parametros
+            );
+
+            const total = Number(conteo[0].total);
+
+            // Obtener solamente la página solicitada
+            const [filas] = await db.query(
+                `SELECT * FROM miniaturas${donde} ORDER BY id ASC LIMIT ? OFFSET ?`,
+                [...parametros, limite, desplazamiento]
+            );
+
             return res.status(200).json({
                 status: 'success',
-                total: filas.length,
+                total,
+                pagina,
+                limite,
+                totalPaginas: Math.ceil(total / limite),
                 data: filas
             });
+
         } catch (error) {
             console.error('Error al consultar miniaturas:', error);
+
             return res.status(500).json({
                 status: 'error',
                 mensaje: 'Error interno del servidor al obtener miniaturas'
             });
         }
     },
+
 
     // 2. Obtener una por ID
     obtenerPorId: async (req, res) => {
