@@ -4,7 +4,7 @@
 
 > Misiones obligatorias antes de construir la interfaz o desplegar.
 
-### - [ ] Misión 1: El Manuscrito de Creación (Script SQL)
+### - [x] Misión 1: El Manuscrito de Creación (Script SQL)
 
 - **Encargado sugerido:** Constructor de BD (Jero).
 - **Objetivo:** Escribir el script SQL definitivo (`schema.sql`) para importar en MariaDB/phpMyAdmin. Debe contener:
