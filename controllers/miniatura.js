@@ -25,12 +25,12 @@ const controladorMiniatura = {
             };
 
             const pagina = leerEntero(filtros.pagina, 1, 1000000);
-            const limite = leerEntero(filtros.limite, 20, 100);
+            const limite = leerEntero(filtros.limite, 500, 1000);
 
             if (pagina === null || limite === null) {
                 return res.status(400).json({
                     status: 'error',
-                    mensaje: 'pagina debe ser un entero entre 1 y 1000000; limite, entre 1 y 100'
+                    mensaje: 'pagina debe ser un entero entre 1 y 1000000; limite, entre 500 y 1000'
                 });
             }
 

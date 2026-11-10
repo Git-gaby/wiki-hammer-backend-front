@@ -44,7 +44,7 @@
       <div class="card-img-wrapper">
         <!-- Si no tiene imagen o es default, mostramos un placeholder imperial -->
         <img 
-          [src]="item.imagen && item.imagen !== 'default.jpg' ? item.imagen : 'assets/placeholder-mini.png'" 
+          [src]="item.imagen && item.imagen !== 'default.jpg' ? 'http://localhost:2508/miniaturas/' + item.imagen : 'assets/placeholder-mini.png'" 
           [alt]="item.nombre"
           loading="lazy"
         />
